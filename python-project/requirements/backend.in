@@ -1,5 +1,6 @@
 fastapi
 pydantic>=2.0
 pydantic-settings
+numpy
 starlette
 uvicorn[standard]
