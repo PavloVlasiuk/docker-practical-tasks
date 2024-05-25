@@ -1,4 +1,6 @@
-FROM golang:1.20-alpine
+# build stage
+
+FROM golang:1.20-alpine AS builder
 
 WORKDIR /app
 
@@ -8,6 +10,16 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o build/fizzbuzz
+RUN CGO_ENABLED=0 GOOS=linux go build -o /fizzbuzz
 
-CMD ["./build/fizzbuzz", "serve"]
+# run binary
+
+FROM scratch
+
+WORKDIR /
+
+COPY --from=builder /app/templates /templates
+
+COPY --from=builder /fizzbuzz /fizzbuzz
+
+CMD ["./fizzbuzz", "serve"]
