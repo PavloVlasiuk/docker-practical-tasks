@@ -14,7 +14,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /fizzbuzz
 
 # run binary
 
-FROM scratch
+FROM gcr.io/distroless/static-debian11
 
 WORKDIR /
 
